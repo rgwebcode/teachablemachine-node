@@ -16,14 +16,9 @@ For now, Teachable Machine Node holds support only for image models, but we won'
 - Install using npm
 
 ```sh
-npm install @sashido/teachablemachine-node
+npm install git+https://github.com/rgwebcode/teachablemachine-node
 ```
 
-- Install using yarn
-
-```sh
-yarn add @sashido/teachablemachine-node
-```
 
 
 # Usage
@@ -73,6 +68,9 @@ const model = new TeachableMachine({
 
 model.classify({
   imageUrl: "https://media-blog.sashido.io/content/images/2020/09/SashiDo_Dog.jpg",
+
+  // Or
+  // imageUrl: "file://path/to/your/image.jpg"
 }).then((predictions) => {
   console.log("Predictions:", predictions);
 }).catch((e) => {
@@ -90,6 +88,9 @@ const TeachableMachine = require("@sashido/teachablemachine-node");
 
 const model = new TeachableMachine({
   modelUrl: "https://teachablemachine.withgoogle.com/models/r6BBk-hiN/"
+
+  // Or
+  // modelUrl: "file://path/to/your/model/"
 });
 
 const app = express();
