@@ -5,8 +5,7 @@ const { promises: fs } = require("fs");
 const path             = require("path");
 const url              = require("url");
 const fType            = require("file-type");
-const tf               = require("@tensorflow/tfjs");
-const tfnode           = require("@tensorflow/tfjs-node");
+const tf               = require("@tensorflow/tfjs-node");
 const PImage           = require("pureimage");
 const isImageUrl       = require("is-image-url");
 const parseDataUrl     = require("parse-data-url");
@@ -117,7 +116,8 @@ class SashiDoTeachableMachine {
                 const metaDataPath  = url.fileURLToPath(`${modelUrl}metadata.json`);
                 const modelJsonPath = path.join(modelPath, "model.json");
 
-                modelURL = tfnode.io.fileSystem(modelJsonPath);
+                // modelURL = tfnode.io.fileSystem(modelJsonPath);
+                modelURL = tf.io.fileSystem(modelJsonPath);
 
                 body = await fs.readFile(metaDataPath);
             }
@@ -162,6 +162,8 @@ class SashiDoTeachableMachine {
         if ( /file:\/\/\//.test(imageUrl) ) {
             let stats = await fs.stat(url.fileURLToPath(imageUrl));
 
+            console.log("stats:", stats);
+
             if ( !stats ) {
                 return Promise.reject({ error: "Image file:// URL does not exist!" });
             }
@@ -191,10 +193,14 @@ class SashiDoTeachableMachine {
             // Check if the url starts with file:///
             else if ( /file:\/\/\//.test(imageUrl) ) {
                 const imagePath = url.fileURLToPath(imageUrl);
+
+                console.log("imagePath:", imagePath);
                 buffer = await fs.readFile(imagePath);
 
                 let contentTypeRaw = await fType.fromBuffer(buffer);
                 contentType = contentTypeRaw.mime;
+
+                console.log("contentTypeRaw:", contentTypeRaw);
             }
 
             // URL to an image
