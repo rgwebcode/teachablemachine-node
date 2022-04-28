@@ -162,8 +162,6 @@ class SashiDoTeachableMachine {
         if ( /file:\/\/\//.test(imageUrl) ) {
             let stats = await fs.stat(url.fileURLToPath(imageUrl));
 
-            console.log("stats:", stats);
-
             if ( !stats ) {
                 return Promise.reject({ error: "Image file:// URL does not exist!" });
             }
