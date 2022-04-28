@@ -191,14 +191,10 @@ class SashiDoTeachableMachine {
             // Check if the url starts with file:///
             else if ( /file:\/\/\//.test(imageUrl) ) {
                 const imagePath = url.fileURLToPath(imageUrl);
-
-                console.log("imagePath:", imagePath);
                 buffer = await fs.readFile(imagePath);
 
                 let contentTypeRaw = await fType.fromBuffer(buffer);
                 contentType = contentTypeRaw.mime;
-
-                console.log("contentTypeRaw:", contentTypeRaw);
             }
 
             // URL to an image
